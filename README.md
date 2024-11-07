@@ -6,7 +6,7 @@ This is a simple depth estimation testing repository used for performing depth e
 ### Prepraration
 
 ```bash
-git clone https://github.com/Depth_Estimator_594
+git clone https://github.com/PeaceNeil/Depth_Estimator_594.git
 cd Depth_Estimator_594
 pip install -r requirements.txt
 wget https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth?download=true
