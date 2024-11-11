@@ -17,7 +17,7 @@ Or download other checkpoints listed [here](https://github.com/DepthAnything/Dep
 ### Infer one frame
 Added a simple script for depth estimation and a 3D surface visualization.
 ```bash 
-python DispAnything.py --image_path IMAGE_PATH --vits MODEL_TYPE
+python DispAnything.py --image_path IMAGE_PATH --encoder MODEL_TYPE
 ```
 ![result](assets/result.png)
 
