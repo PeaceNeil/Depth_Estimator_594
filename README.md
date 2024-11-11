@@ -9,7 +9,7 @@ This is a simple depth estimation testing repository used for performing depth e
 git clone https://github.com/PeaceNeil/Depth_Estimator_594.git
 cd Depth_Estimator_594
 pip install -r requirements.txt
-wget https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth?download=true
+wget https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth
 ```
 
 Or download other checkpoints listed [here](https://github.com/DepthAnything/Depth-Anything-V2?tab=readme-ov-file#pre-trained-models).
