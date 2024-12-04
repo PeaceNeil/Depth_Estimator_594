@@ -9,3 +9,4 @@ Thumbs.db
 *.pth
 vis_video_depth
 *.mp4
+data

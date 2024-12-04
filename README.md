@@ -21,4 +21,9 @@ python DispAnything.py --image_path IMAGE_PATH --encoder MODEL_TYPE
 ```
 ![result](assets/result.png)
 
+### Perception based on mean value
+```bash 
+python perception.py --image_path IMAGE_PATH
+```
+
 

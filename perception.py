@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -44,12 +45,16 @@ def process_depth_map(file_path, rectangle_ratio, threshold, visualize=False):
     return "stop" if mean_value > threshold else "safe"
 
 if __name__ == "__main__":
-    depth_file = "depth_map.png"
+    parser = argparse.ArgumentParser(description="Perception based on depth map")
+    parser.add_argument('--image_path', type=str, required=True, help="Path to the input depth image.")
+    parser.add_argument('--rectangle_ratio', type=float, nargs=2, default=(0.5, 0.5), 
+                        help="Center rectangle ratio as two floats (default: 0.5 0.5).")
+    parser.add_argument('--threshold', type=int, default=128, 
+                        help="Threshold value for processing (default: 128).")
+    parser.add_argument('--visualize', type=str, default='True', 
+                        help="Enable or disable visualization (True/False).")
 
-    # Parameters
-    rectangle_ratio = (0.5, 0.5)  # Center rectangle ratio
-    threshold = 128  # Threshold value
-    visualize = True  # Set to True to enable visualization
+    args = parser.parse_args() # Set to True to enable visualization
 
-    result = process_depth_map(depth_file, rectangle_ratio, threshold, visualize=visualize)
+    result = process_depth_map(args.image_path, args.rectangle_ratio, args.threshold, visualize=args.visualize)
     print(f"Result: {result}")

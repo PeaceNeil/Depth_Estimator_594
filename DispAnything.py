@@ -47,33 +47,34 @@ def normalize_depth(depth):
     Z_normalized = (depth - Z_min) / (Z_max - Z_min) * 255
     return Z_normalized.astype(np.uint8)
 
-def plot_results(raw_img_rgb, Z_normalized, X, Y, Z):
+def plot_results(raw_img_rgb, Z_normalized, X, Y, Z, args):
     """Plot original image, depth map, and 3D surface depth map."""
     fig = plt.figure(figsize=(18, 6))
-
+    column = 3 if args.plotsurface else 2
     # Original Image
-    ax1 = fig.add_subplot(1, 3, 1)
+    ax1 = fig.add_subplot(1, column, 1)
     ax1.imshow(raw_img_rgb)
     ax1.set_title('Original Image')
     ax1.axis('off')
 
     # Depth Map
-    ax2 = fig.add_subplot(1, 3, 2)
+    ax2 = fig.add_subplot(1, column, 2)
     ax2.imshow(Z_normalized, cmap='gray')
     ax2.set_title('Depth Map')
     ax2.axis('off')
 
     # 3D Surface Plot
-    ax3 = fig.add_subplot(1, 3, 3, projection='3d')
-    stride = 8  # Adjust stride for performance
-    X_down, Y_down, Z_down = X[::stride, ::stride], Y[::stride, ::stride], Z[::stride, ::stride]
-    ax3.plot_surface(X_down, Y_down, Z_down, rstride=1, cstride=1, facecolors=raw_img_rgb[::stride, ::stride] / 255.0, edgecolor='none', alpha=0.8)
+    if args.plotsurface:
+        ax3 = fig.add_subplot(1, 3, 3, projection='3d')
+        stride = 8  # Adjust stride for performance
+        X_down, Y_down, Z_down = X[::stride, ::stride], Y[::stride, ::stride], Z[::stride, ::stride]
+        ax3.plot_surface(X_down, Y_down, Z_down, rstride=1, cstride=1, facecolors=raw_img_rgb[::stride, ::stride] / 255.0, edgecolor='none', alpha=0.8)
 
-    ax3.set_title('3D Surface Depth Map')
-    ax3.set_xlabel('Width (W)')
-    ax3.set_ylabel('Height (H)')
-    ax3.set_zlabel('Depth Value')
-    set_axes_equal(ax3)
+        ax3.set_title('3D Surface Depth Map')
+        ax3.set_xlabel('Width (W)')
+        ax3.set_ylabel('Height (H)')
+        ax3.set_zlabel('Depth Value')
+        set_axes_equal(ax3)
     plt.tight_layout()
     plt.show()
 
@@ -107,12 +108,12 @@ def main(args):
     X, Y = np.meshgrid(np.arange(W), np.arange(H))
     Z = 255 - Z_normalized  # Invert for 3D visualization
 
-    plot_results(raw_img_rgb, Z_normalized, X, Y, Z)
+    plot_results(raw_img_rgb, Z_normalized, X, Y, Z, args)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Depth map inference and visualization.")
     parser.add_argument('--image_path', type=str, required=True, help="Path to the input image.")
     parser.add_argument('--encoder', type=str, default='vits', choices=['vits', 'vitb', 'vitl', 'vitg'], help="Model encoder type.")
-    
+    parser.add_argument('--plotsurface', action='store_true', help='Enable or disable plot surface')
     args = parser.parse_args()
     main(args)
